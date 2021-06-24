@@ -5,10 +5,10 @@ import Pubs from './Pubs/Pubs';
 
 const App = () => {
   return (
-    <Switch>
-      <Route exact path="/" component={Pubs} />
-      <Route exact path="/pubs/:slug" component={Pub} />      
-    </Switch>
+      <Switch>
+        <Route exact path="/" component={Pubs} />
+        <Route exact path="/pubs/:slug" component={Pub} />      
+      </Switch>
   )
 }
 
