@@ -32,7 +32,7 @@ const Header = ({name, image_url, avg_score, total_reviews}) => {
         {name}
       </h1>
       <div>
-        <TotalReviews>{total_reviews} Users Reviews</TotalReviews>
+        <TotalReviews>{total_reviews} Reviews</TotalReviews>
         <div className="totalRating"></div>
         <TotalOutOf>{avg_score} 3 of 5</TotalOutOf>
       </div>

@@ -3,6 +3,7 @@ import axios from 'axios'
 import Header from './Header'
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
+import Review from './Review';
 
 const Wrapper = styled.div`
   margin-left: auto;
@@ -28,7 +29,7 @@ const Main = styled.div`
 const Pub = (props) => {
   const [pub, setPub] = useState({})
   const [review, setReview] = useState({})
-  const [loader, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(()=>{
     const slug = props.match.params.slug;
@@ -38,7 +39,6 @@ const Pub = (props) => {
     .then(resp => {
             setPub(resp.data)
             setLoaded(true)
-            console.log(resp)          
     })
     .catch(resp => console.log(resp))
   },[])
@@ -72,10 +72,24 @@ const setRating = (score, e) => {
   setReview({...review, score})
 } 
 
+let reviews
+if (loaded && pub.included){
+  reviews = pub.included.map( (item, index) => {
+    return (
+      <Review 
+        key={index}
+        title={item.attributes.title}
+        description={item.attributes.description}
+        score={item.attributes.score}
+      />
+    )
+  })
+}
+
   return (
     <Wrapper>
       { 
-        loader &&
+        loaded &&
           <>
             <Colum>
               <Main>
@@ -85,7 +99,7 @@ const setRating = (score, e) => {
                     avg_score={pub.data.attributes.avg_score}
                     total_reviews={pub.data.relationships.reviews.data.length}
                   />
-                <div className="reviews"></div>
+                {reviews}
               </Main>
             </Colum>
             <Colum>
