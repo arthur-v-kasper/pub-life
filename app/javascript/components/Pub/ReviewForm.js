@@ -15,7 +15,7 @@ const RatingBox = styled.div`
   justify-content: center;
   flex-direction: row-reverse;
   position: relative;
-
+  margin-top: 12px;
   input {
     display: none;    
   }
@@ -41,17 +41,22 @@ const RatingBox = styled.div`
   }
 `
 
-const RatingTitle = styled.div``
+const RatingTitle = styled.div`
+  font-size: 20px;
+  padding-bottom: 20px;
+  font-weight: bold;
+`
 
 const Filed = styled.div`
   border-radius: 4px;
-
+  
   input {
     min-height: 50px;
     border-radius: 4px;
     border: 1px solid #e6e6e6;
-    margin: 12px 0;
+    margin: 0 0 12px 0;
     padding: 12px;    
+    width: 95%;
   }
 
   textarea {
@@ -61,11 +66,38 @@ const Filed = styled.div`
     border: 1px solid #e6e6e6;
     margin: 12px 0;
     padding: 12px;   
+
   }
 `
-const Wrapper = styled.div``
-const SubmitBtn = styled.div``
-const Headline = styled.div``
+const Wrapper = styled.div`
+  background: #000;
+  padding: 20px;
+  height: 10vh;
+  padding-top: 100px;
+`
+const SubmitBtn = styled.button`
+  color: #fff;
+  background: #333;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: ease-in-out 0.1s;
+  border: 1px solid #fff;
+  width: 100%;
+  margin-top: 20px;
+  &:hover {
+    background: #fff;
+    color: #000;
+    border: 1px solid #fff;
+  }
+`
+const Headline = styled.div`
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+`
 
 const ReviewForm = ({ handleChange, handleSubmit, name, review, setRating }) => {
   
@@ -80,9 +112,9 @@ const ReviewForm = ({ handleChange, handleSubmit, name, review, setRating }) => 
   })
 
   return (
-    <div className="wrapper">
+    <Wrapper>
       <form onSubmit={handleSubmit}>
-        <div>Have as amazing experience at {name}? Share your review!!</div>
+        <Headline>Have as amazing experience at {name}? Share your review!!</Headline>
         <Filed>
           <input onChange={handleChange} value={review.title} type="text" name="title" placeholder="Review Title"/>          
         </Filed>
@@ -91,15 +123,15 @@ const ReviewForm = ({ handleChange, handleSubmit, name, review, setRating }) => 
         </Filed>
         <Filed>
           <RatingContainer>
-            <div className="rating-title">Rating this Pub</div>
+            <RatingTitle>Rating this Pub</RatingTitle>
             <RatingBox>
               {ratingOptions}
             </RatingBox>
           </RatingContainer>
         </Filed>
-        <button type="submit">Submit your review</button>
+        <SubmitBtn type="submit">Submit your review</SubmitBtn>
       </form>
-    </div>
+    </Wrapper>
   )
 };
 

@@ -92,7 +92,7 @@ const setRating = (score, e) => {
               <ReviewForm 
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                name={pub.data.relationships.reviews.data.name}
+                name={pub.data.attributes.name}
                 setRating={setRating}
                 review={review}
               />
