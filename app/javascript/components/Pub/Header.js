@@ -19,7 +19,7 @@ const TotalReviews = styled.div`
   padding: 10px 0;
 `
 const TotalOutOf = styled.div`
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   padding: 10px 0;
 `
@@ -34,7 +34,7 @@ const Header = ({name, image_url, avg_score, total_reviews}) => {
       <div>
         <TotalReviews>{total_reviews} Reviews</TotalReviews>
         <div className="totalRating"></div>
-        <TotalOutOf>{avg_score} 3 of 5</TotalOutOf>
+        <TotalOutOf>{avg_score} of 5</TotalOutOf>
       </div>
     </Wrapper>
   )

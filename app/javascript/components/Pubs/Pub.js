@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import styled from 'styled-components';
+import Rating from "../Rating/Rating";
 
 const Card = styled.div`
   border: 1px solid #efefef;
@@ -46,7 +47,7 @@ const Pub = ({ name, image_url, avg_score, slug }) => {
         <img src={image_url} alt={name}/>
       </PubLogo>
       <PubName>{name}</PubName>
-      <div className="pub-score">{avg_score}</div>
+      <Rating score={avg_score} />
       <LinkWrapper>
         <Link to={`/pubs/${slug}`}>Check this Pub</Link>
       </LinkWrapper>
