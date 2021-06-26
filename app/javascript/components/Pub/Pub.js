@@ -67,6 +67,11 @@ const handleSubmit = (e) => {
   .catch(resp => {})
 }
 
+const setRating = (score, e) => {
+  e.preventDefault
+  setReview({...review, score})
+} 
+
   return (
     <Wrapper>
       { 
@@ -88,6 +93,7 @@ const handleSubmit = (e) => {
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 name={pub.data.relationships.reviews.data.name}
+                setRating={setRating}
                 review={review}
               />
             </Colum>
