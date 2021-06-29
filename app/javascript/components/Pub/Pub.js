@@ -44,6 +44,7 @@ const Pub = (props) => {
     })
     .catch(resp => console.log(resp))
   },[])
+
 const handleChange = (e) => {
   e.preventDefault()
 
@@ -57,16 +58,16 @@ const handleSubmit = (e) => {
 
   AxiosWrapper.post('/api/v1/reviews', {review, pub_id})
   .then(resp => {    
-    setReviews([...reviews, included])
+    setReviews([...reviews, resp.data.data])
     setReview({title: '', description: '', score: 0})
   })
-  .catch(resp => {})
+  .catch(() => {})
 }
 
 const handleDelete = (id, e) => {  
   e.preventDefault()  
   AxiosWrapper.delete(`/api/v1/reviews/${id}`)
-  .then(resp => {      
+  .then(() => {      
       const include = [...reviews]
       const index = include.findIndex(data => data.id === id)
       include.splice(index, 1)
@@ -80,8 +81,13 @@ const setRating = (score, e) => {
   setReview({...review, score})
 } 
 
+let average_score, total = 0
 let userReviews
 if (loaded && reviews.length > 0){
+ 
+  total = reviews.reduce((total, item) => total + item.attributes.score, 0)  
+  average_score = total > 0 ? parseFloat(total) / parseFloat(reviews.length) : 0
+  debugger
   userReviews = reviews.map((item, index) => {
     return (
       <Review 
@@ -105,8 +111,8 @@ if (loaded && reviews.length > 0){
                   <Header             
                     name={pub.data.attributes.name}
                     image_url={pub.data.attributes.image_url}
-                    avg_score={pub.data.attributes.avg_score}
-                    total_reviews={pub.included.length}
+                    avg_score={average_score}
+                    total_reviews={reviews.length}
                   />
                 {userReviews}
               </Main>
