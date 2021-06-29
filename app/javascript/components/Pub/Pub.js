@@ -42,12 +42,10 @@ const Pub = (props) => {
     })
     .catch(resp => console.log(resp))
   },[])
-
 const handleChange = (e) => {
   e.preventDefault()
 
   setReview(Object.assign({}, review, {[e.target.name]: e.target.value}))
-  console.log('review: ', review)
 }
 
 const handleSubmit = (e) => {
@@ -62,13 +60,15 @@ const handleSubmit = (e) => {
   .then(resp => {
     const included = [...pub.included, resp.data.data]
     setPub({...pub, included})
+    //debugger
     setReview({title: '', description: '', score: 0})
+    //rerenderReview()
   })
   .catch(resp => {})
 }
 
 const setRating = (score, e) => {
-  e.preventDefault
+  e.preventDefault()
   setReview({...review, score})
 } 
 
@@ -97,7 +97,7 @@ if (loaded && pub.included){
                     name={pub.data.attributes.name}
                     image_url={pub.data.attributes.image_url}
                     avg_score={pub.data.attributes.avg_score}
-                    total_reviews={pub.data.relationships.reviews.data.length}
+                    total_reviews={pub.included.length}
                   />
                 {reviews}
               </Main>
@@ -108,7 +108,7 @@ if (loaded && pub.included){
                 handleSubmit={handleSubmit}
                 name={pub.data.attributes.name}
                 setRating={setRating}
-                review={review}
+                review={review}                
               />
             </Colum>
           </>
