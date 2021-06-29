@@ -130,7 +130,7 @@ const ReviewForm = ({ handleChange, handleSubmit, name, review, setRating }) => 
           </RatingContainer>
         </Filed>
         <SubmitBtn type="submit">Submit your review</SubmitBtn>
-      </form>
+      </form>  
     </Wrapper>
   )
 };
