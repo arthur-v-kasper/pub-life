@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Rating from '../Rating/Rating';
 import { AiOutlineClose } from 'react-icons/ai';
 
+
 const Card = styled.div`
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -20,6 +21,10 @@ const RatingContainer = styled.div`
     flex: 1;
   }
 
+  .close {
+    cursor: pointer;
+  }
+
 `
 
 const Title = styled.div`
@@ -31,14 +36,14 @@ const Description = styled.div`
   font-size: 14px;
 `
 
-const Review = ({ title, description,  score }) => {
+const Review = ({ title, description,  score, handleDelete, id }) => {
   return (
-    <Card>
+    <Card key={id}>
       <RatingContainer>
         <span>
           <Rating score={score} />
         </span>
-        <AiOutlineClose />
+        <AiOutlineClose className="close" onClick={ handleDelete.bind(this, id)} />
       </RatingContainer>
       <Title>{title}</Title>
       <Description>{description}</Description>

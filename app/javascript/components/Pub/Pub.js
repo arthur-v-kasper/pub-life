@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Header from './Header'
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
+import AxiosWrapper from '../../util/AxiosWrapper';
 
 const Wrapper = styled.div`
   margin-left: auto;
@@ -30,14 +30,16 @@ const Pub = (props) => {
   const [pub, setPub] = useState({})
   const [review, setReview] = useState({})
   const [loaded, setLoaded] = useState(false)
+  const [reviews, setReviews] = useState([])
 
   useEffect(()=>{
     const slug = props.match.params.slug;
     const url = `/api/v1/pubs/${slug}`;
 
-    axios.get(url)
+    AxiosWrapper.get(url)
     .then(resp => {
             setPub(resp.data)
+            setReviews(resp.data.included)
             setLoaded(true)
     })
     .catch(resp => console.log(resp))
@@ -51,20 +53,26 @@ const handleChange = (e) => {
 const handleSubmit = (e) => {
   e.preventDefault()
 
-  const csrfToken = document.querySelector('meta[name=csrf-token]').content
-  axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-
   const pub_id = pub.data.id
 
-  axios.post('/api/v1/reviews', {review, pub_id})
-  .then(resp => {
-    const included = [...pub.included, resp.data.data]
-    setPub({...pub, included})
-    //debugger
+  AxiosWrapper.post('/api/v1/reviews', {review, pub_id})
+  .then(resp => {    
+    setReviews([...reviews, included])
     setReview({title: '', description: '', score: 0})
-    //rerenderReview()
   })
   .catch(resp => {})
+}
+
+const handleDelete = (id, e) => {  
+  e.preventDefault()  
+  AxiosWrapper.delete(`/api/v1/reviews/${id}`)
+  .then(resp => {      
+      const include = [...reviews]
+      const index = include.findIndex(data => data.id === id)
+      include.splice(index, 1)
+      setReviews(include)
+  })
+  .catch(resp => console.log(resp))
 }
 
 const setRating = (score, e) => {
@@ -72,15 +80,16 @@ const setRating = (score, e) => {
   setReview({...review, score})
 } 
 
-let reviews
-if (loaded && pub.included){
-  reviews = pub.included.map( (item, index) => {
+let userReviews
+if (loaded && reviews.length > 0){
+  userReviews = reviews.map((item, index) => {
     return (
       <Review 
-        key={index}
         title={item.attributes.title}
         description={item.attributes.description}
         score={item.attributes.score}
+        handleDelete={handleDelete}
+        id={item.id}
       />
     )
   })
@@ -99,7 +108,7 @@ if (loaded && pub.included){
                     avg_score={pub.data.attributes.avg_score}
                     total_reviews={pub.included.length}
                   />
-                {reviews}
+                {userReviews}
               </Main>
             </Colum>
             <Colum>
@@ -108,7 +117,7 @@ if (loaded && pub.included){
                 handleSubmit={handleSubmit}
                 name={pub.data.attributes.name}
                 setRating={setRating}
-                review={review}                
+                review={review}                       
               />
             </Colum>
           </>
