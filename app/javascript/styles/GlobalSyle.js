@@ -20,8 +20,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const GlobalStyleComponet = () => {
-  <GlobalStyle />
-}
+const GlobalStyleComponet = () => <GlobalStyle />
 
-export default GlobalStyleComponet;  
+export default GlobalStyleComponet;

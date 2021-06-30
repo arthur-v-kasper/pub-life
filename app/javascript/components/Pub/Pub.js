@@ -10,12 +10,14 @@ const Wrapper = styled.div`
   margin-right: auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  height: calc(100vh - 50px);
+  border: 1px solid;
 `
 
 const Colum = styled.div`
   background: #fff;
-  height: 98vh;
-  overflow: scroll;
+  height: 100%;
+  overflow: auto;
 
   &:last-child {
     background: #000;

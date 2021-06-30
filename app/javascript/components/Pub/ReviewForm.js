@@ -56,7 +56,7 @@ const Filed = styled.div`
     border: 1px solid #e6e6e6;
     margin: 0 0 12px 0;
     padding: 12px;    
-    width: 95%;
+    width: 100%;
   }
 
   textarea {
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
 `
 const SubmitBtn = styled.button`
   color: #fff;
-  background: #333;
+  background: #355d09;
   border-radius: 4px;
   padding: 12px;
   font-size: 18px;
